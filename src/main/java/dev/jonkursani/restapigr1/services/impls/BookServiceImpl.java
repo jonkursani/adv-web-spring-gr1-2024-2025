@@ -33,18 +33,19 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto create(CreateBookRequest request) {
-        var bookToSave = new Book(0, request.getTitle(), request.getAuthor());
-        var savedBook = repository.save(bookToSave);
-        return new BookDto(savedBook.getId(), savedBook.getTitle(), savedBook.getAuthor());
+//        var bookToSave = new Book(0, request.getTitle(), request.getAuthor());
+//        var savedBook = repository.save(bookToSave);
+//        return new BookDto(savedBook.getId(), savedBook.getTitle(), savedBook.getAuthor());
+        return new BookDto();
     }
 
     @Override
     public void update(long id, UpdateBookRequest request) {
-        var bookFromDb = findById(id);
-        if (bookFromDb != null) {
-            var bookToUpdate = new Book(id, request.getTitle(), request.getAuthor());
-            repository.save(bookToUpdate);
-        }
+//        var bookFromDb = findById(id);
+//        if (bookFromDb != null) {
+//            var bookToUpdate = new Book(id, request.getTitle(), request.getAuthor());
+//            repository.save(bookToUpdate);
+//        }
     }
 
     @Override
