@@ -1,10 +1,8 @@
-package dev.jonkursani.restapigr1.dtos;
+package dev.jonkursani.restapigr1.dtos.book;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor

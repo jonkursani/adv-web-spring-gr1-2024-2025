@@ -1,8 +1,8 @@
 package dev.jonkursani.restapigr1.controllers;
 
-import dev.jonkursani.restapigr1.dtos.BookDto;
-import dev.jonkursani.restapigr1.dtos.CreateBookRequest;
-import dev.jonkursani.restapigr1.dtos.UpdateBookRequest;
+import dev.jonkursani.restapigr1.dtos.book.BookDto;
+import dev.jonkursani.restapigr1.dtos.book.CreateBookRequest;
+import dev.jonkursani.restapigr1.dtos.book.UpdateBookRequest;
 import dev.jonkursani.restapigr1.services.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
