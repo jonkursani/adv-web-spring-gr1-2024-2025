@@ -50,6 +50,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public EmployeeDto findById(Integer id) {
+        return repository.findById(id)
+                .map(employeeMapper::toDto)
+                .orElseThrow(() -> new EmployeeNotFoundException(id));
+    }
+
+    @Override
     public EmployeeDto create(CreateEmployeeRequest request) {
         if (repository.existsEmployeeByEmail(request.getEmail())) {
             throw new EmailAlreadyExistsException(request.getEmail());
@@ -99,10 +106,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeMapper.toDto(repository.save(employeeFromDb));
     }
 
+    @Override
+    public void delete(Integer id) {
+        repository.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException(id));
 
-
-
-
-
-
+        repository.deleteById(id);
+//        repository.delete(employeeFromDb);
+    }
 }

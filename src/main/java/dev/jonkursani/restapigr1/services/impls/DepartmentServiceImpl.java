@@ -4,6 +4,7 @@ import dev.jonkursani.restapigr1.dtos.department.CreateDepartmentRequest;
 import dev.jonkursani.restapigr1.dtos.department.DepartmentDto;
 import dev.jonkursani.restapigr1.dtos.department.DepartmentWithEmployeeCount;
 import dev.jonkursani.restapigr1.dtos.department.UpdateDepartmentRequest;
+import dev.jonkursani.restapigr1.exceptions.department.DepartmentHasEmployeesException;
 import dev.jonkursani.restapigr1.exceptions.department.DepartmentNotFoundException;
 import dev.jonkursani.restapigr1.mappers.DepartmentMapper;
 import dev.jonkursani.restapigr1.repositories.DepartmentRepository;
@@ -63,10 +64,15 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public void delete(Integer id) {
-//        var departmentFromDb = repository.findById(id)
-//                .orElseThrow(() -> new DepartmentNotFoundException(id));
+        var departmentFromDb = repository.findById(id)
+                .orElseThrow(() -> new DepartmentNotFoundException(id));
 
-        findById(id);
+//        findById(id);
+
+        if (!departmentFromDb.getEmployees().isEmpty()) {
+            throw new DepartmentHasEmployeesException(id);
+        }
+
         repository.deleteById(id);
     }
 
@@ -78,9 +84,4 @@ public class DepartmentServiceImpl implements DepartmentService {
                 .map(mapper::toDepartmentWithEmployeeCount)
                 .toList();
     }
-
-
-
-
-
 }

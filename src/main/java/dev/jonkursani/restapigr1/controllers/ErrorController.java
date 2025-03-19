@@ -41,4 +41,10 @@ public class ErrorController {
         var errorResponse = new ApiErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), null);
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT); // 409
     }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ApiErrorResponse> handleIllegalStateException(IllegalStateException ex) {
+        var errorResponse = new ApiErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), null);
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT); // 409
+    }
 }
