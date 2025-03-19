@@ -36,8 +36,9 @@ public class ErrorController {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND); // 404
     }
 
-
-
-
-
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
+        var errorResponse = new ApiErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), null);
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT); // 409
+    }
 }

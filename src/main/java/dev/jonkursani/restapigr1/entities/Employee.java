@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -44,4 +45,18 @@ public class Employee {
 
     @OneToMany(mappedBy = "employee")
     private Set<EmployeeMission> employeeMissions = new LinkedHashSet<>();
+
+//    @PrePersist
+//    protected void onCreate() {
+//        hireDate = LocalDate.now();
+//    }
+
+//    @PreUpdate
+//    protected void onUpdate() {
+//        updatedAt = LocalDateTime.now();
+//    }
+
+
+
+
 }
