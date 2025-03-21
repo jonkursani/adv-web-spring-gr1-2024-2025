@@ -9,12 +9,23 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+//        ┌───────────── second (0-59)
+//        │ ┌───────────── minute (0 - 59)
+//        │ │ ┌───────────── hour (0 - 23)
+//        │ │ │ ┌───────────── day of the month (1 - 31)
+//        │ │ │ │ ┌───────────── month (1 - 12) (or JAN-DEC)
+//        │ │ │ │ │ ┌───────────── day of the week (0 - 7)
+//        │ │ │ │ │ │          (0 or 7 is Sunday, or MON-SUN)
+//        │ │ │ │ │ │
+//        * * * * * *
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class EmployeeReportScheduler {
     private final EmployeeRepository repository;
 
+    // https://docs.spring.io/spring-framework/reference/integration/scheduling.html#scheduling-cron-expression
     // https://crontab.guru/
 
     // every monday 9 AM

@@ -4,6 +4,7 @@ import dev.jonkursani.restapigr1.dtos.ApiErrorResponse;
 import dev.jonkursani.restapigr1.exceptions.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -46,5 +47,11 @@ public class ErrorController {
     public ResponseEntity<ApiErrorResponse> handleIllegalStateException(IllegalStateException ex) {
         var errorResponse = new ApiErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), null);
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT); // 409
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ApiErrorResponse> handleBadCredentialsException(BadCredentialsException ex) {
+        var errorResponse = new ApiErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage(), null);
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED); // 401
     }
 }
