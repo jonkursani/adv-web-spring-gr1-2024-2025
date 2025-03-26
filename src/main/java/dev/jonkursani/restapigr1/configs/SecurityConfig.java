@@ -21,6 +21,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.time.LocalDateTime;
 
+import static dev.jonkursani.restapigr1.entities.Permission.*;
+import static dev.jonkursani.restapigr1.entities.Role.ADMIN;
+import static dev.jonkursani.restapigr1.entities.Role.MANAGER;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -48,6 +52,32 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/departments/**").permitAll()
                         // per te gjitha routes tjera qe nuk i keni specifiku lart duhet auth
+
+                        // request matchers authorization
+                        // niveli i validimit te komplet routes
+                        // hasRole pranon vetem nje rol, hasAnyRole pranon 2 e me shume
+                        .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), MANAGER.name())
+
+                        // validoni endpoints specifik
+                        // hasAuthority vetem nje permission, hasAnyAuthority 2 e me shume
+                        .requestMatchers(HttpMethod.GET, "/api/v1/management/**")
+                            .hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
+                        .requestMatchers(HttpMethod.POST, "/api/v1/management/**")
+                            .hasAnyAuthority(ADMIN_WRITE.name(), MANAGER_WRITE.name())
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/management/**")
+                            .hasAnyAuthority(ADMIN_WRITE.name(), MANAGER_WRITE.name())
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/management/**")
+                            .hasAnyAuthority(ADMIN_WRITE.name(), MANAGER_WRITE.name())
+
+
+//                        .requestMatchers("/api/v1/admin").hasRole(ADMIN.name())
+//                        .requestMatchers(HttpMethod.GET, "/api/v1/admin/**").hasAuthority(ADMIN_READ.name())
+//                        .requestMatchers(HttpMethod.POST, "/api/v1/admin/**").hasAuthority(ADMIN_WRITE.name())
+//                        .requestMatchers(HttpMethod.PUT, "/api/v1/admin/**").hasAuthority(ADMIN_WRITE.name())
+//                        .requestMatchers(HttpMethod.DELETE, "/api/v1/admin/**").hasAuthority(ADMIN_WRITE.name())
+
+//                        .requestMatchers("api/v1/employees").hasRole(ADMIN.name(), EMPLOYEE.name())
+
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable()) // cross-site request forgery

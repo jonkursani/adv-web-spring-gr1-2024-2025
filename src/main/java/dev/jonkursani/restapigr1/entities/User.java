@@ -26,6 +26,10 @@ public class User {
     @Column(nullable = false, length = 100)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50)
+    private Role role;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
