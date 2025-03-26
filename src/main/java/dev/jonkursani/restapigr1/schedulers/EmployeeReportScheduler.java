@@ -45,7 +45,7 @@ public class EmployeeReportScheduler {
 
     // every friday 8 AM
 //    @Scheduled(cron = "0 0 8 ? * FRI")
-    @Scheduled(fixedRate = 10000)
+//    @Scheduled(fixedRate = 10000)
     @Transactional
     public void getHireReport() {
         log.info("Generating hire report");

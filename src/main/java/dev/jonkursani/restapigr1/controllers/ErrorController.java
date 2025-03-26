@@ -51,7 +51,10 @@ public class ErrorController {
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ApiErrorResponse> handleBadCredentialsException(BadCredentialsException ex) {
-        var errorResponse = new ApiErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage(), null);
+        var errorResponse = new ApiErrorResponse(
+                HttpStatus.UNAUTHORIZED.value(),
+                "Invalid email or password",
+                null);
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED); // 401
     }
 }
