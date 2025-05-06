@@ -22,8 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.time.LocalDateTime;
 
 import static dev.jonkursani.restapigr1.entities.Permission.*;
-import static dev.jonkursani.restapigr1.entities.Role.ADMIN;
-import static dev.jonkursani.restapigr1.entities.Role.MANAGER;
+import static dev.jonkursani.restapigr1.entities.Role.*;
 
 @Configuration
 @EnableWebSecurity
@@ -81,6 +80,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable()) // cross-site request forgery
+                .cors(cors -> {}) // Enable CORS with the bean from CorsConfig
                 // kur perdorim jwt token nuk na duhet session management per ate e vendosim si stateless
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -99,6 +99,7 @@ public class SecurityConfig {
                     var newUser = User.builder()
                             .name("User")
                             .email(email)
+                            .role(USER)
                             .password(passwordEncoder().encode("password"))
                             .build();
 
