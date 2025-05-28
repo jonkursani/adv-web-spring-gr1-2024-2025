@@ -1,5 +1,6 @@
 package dev.jonkursani.restapigr1.services.impls;
 
+import dev.jonkursani.restapigr1.security.AppUserDetails;
 import dev.jonkursani.restapigr1.services.AuthenticationService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -41,6 +42,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("authorities", userDetails.getAuthorities());
+        claims.put("id", ((AppUserDetails) userDetails).getUser().getId());
+        claims.put("name", ((AppUserDetails) userDetails).getUser().getName());
+        claims.put("role", ((AppUserDetails) userDetails).getUser().getRole().name());
+
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername()) // "sub": email
